@@ -1,0 +1,193 @@
+$transition : .75s;
+$width : 5vmin;
+$radius : 1vmin;
+$angle : 35deg;
+$bg : #23c9ff; 
+$accent : #140D4F;
+$buttonbg : transparent;
+.open-settings{
+  background-color:$bg;
+  border-radius: 30% 0 0 30% ;
+  padding:  20px 20px 20px 20px;
+}
+.button {
+  background: $buttonbg;
+  padding: 2vmin;
+  background: $buttonbg;
+  cursor: pointer;
+  transition: $transition/2;
+  margin: 2vmin;
+
+  &:active {
+    background: darken($buttonbg, 20%);
+    transition: 0;
+  }
+}
+
+.arrow {
+  position: relative;
+  background: $accent;
+  width: $width;
+  height: $width/10;  
+  transition: $transition;
+  border-radius: $radius;
+  transform-origin: right center;
+
+  &:before { transform: rotate(-$angle); }
+  &:after { transform: rotate($angle); }
+
+  &:before, &:after {
+      display: block;
+      content: "";
+      position: absolute;
+      left: 0;
+      background: $accent;
+      width: $width/2;
+      height: $width/10;
+      transform-origin: $width/20 center;
+      transition: $transition;
+      border-radius: $radius;
+    }
+}
+
+.switch.rightArrow {
+  .arrow {  
+    &:before, &:after {
+      left: $width - $width/20;
+    }
+    &:before { transform: rotate($angle*4); }
+    &:after { transform: rotate(-$angle*4); }
+  }
+}
+
+.flip { transform: translateZ(1vmin) perspective(600); }
+
+.flip.rightArrow {
+  transform: translateZ(1vmin) perspective(600) rotateY(180deg);  
+}
+
+
+
+// arrow anims over
+
+.settings {
+  background-color: #140D4F;
+  height: 100vh;
+  border-left: 0.5vmin solid $bg;
+  border-radius: 1% 0 0 0;
+
+}
+.side-solve {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  // border-top: 1vmin solid $bg;
+  background-color: #8332AC;
+  border-radius: 100px 100px 0 0;
+  padding: 5% 0;
+}
+.side-solve:hover{
+  //transform: scale(1.05);
+  background-color: lighten($color: #8332AC, $amount: 10);
+  cursor :pointer;
+}
+.open-settings {
+  width: 10vmin;
+  float: right;
+  
+
+}
+.open-settings:hover{
+  transform: scale(1.05);
+}
+
+// start of speed styling
+input[type="range"] { 
+  width  :100%;
+  margin: auto;
+  -webkit-appearance: none;
+  overflow: hidden;
+  height: 40px;
+ // width: 200px;
+  cursor: pointer;
+  border-radius: 0; /* iOS */
+  direction: rtl;
+}
+
+::-webkit-slider-runnable-track {
+  background: #ddd;
+}
+
+/*
+* 1. Set to 0 width and remove border for a slider without a thumb
+*/
+::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 0px; /* 1 */
+  height: 40px;
+  background: #fff;
+  box-shadow: -100vw 0 0 100vw $bg;
+  border: 2px solid #999; /* 1 */
+}
+
+::-moz-range-track {
+  height: 40px;
+  background: #ddd;
+}
+
+::-moz-range-thumb {
+  background: #fff;
+  height: 40px;
+  width: 20px;
+  border: 3px solid #999;
+  border-radius: 0 !important;
+  box-shadow: -100vw 0 0 100vw dodgerblue;
+  box-sizing: border-box;
+}
+
+::-ms-fill-lower { 
+  background: dodgerblue;
+}
+
+::-ms-thumb { 
+  background: #fff;
+  border: 2px solid #999;
+  height: 40px;
+  width: 20px;
+  box-sizing: border-box;
+}
+
+::-ms-ticks-after { 
+  display: none; 
+}
+
+::-ms-ticks-before { 
+  display: none; 
+}
+
+::-ms-track { 
+  background: #ddd;
+  color: transparent;
+  height: 40px;
+  border: none;
+}
+
+::-ms-tooltip { 
+  display: none;
+}
+
+.speed-slider{
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+}
+.speed-label{
+  margin-top: 5%;
+  text-align: center;
+  color: white;
+}
+
+//end of slider
+
+
+

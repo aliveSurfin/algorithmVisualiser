@@ -1,0 +1,116 @@
+$bg : #23c9ff; 
+$accent : #140D4F;
+ul{
+    white-space: nowrap;
+    text-align: center;
+}
+ul > li {
+    display: inline-block;
+    vertical-align: top;
+    white-space: normal;
+    width: 40%;
+    text-align: center;
+}
+
+
+@font-face {
+    font-family: "DotGothic16-Regular";
+    src: url("../../fonts/DotGothic16-Regular.ttf");
+  }
+  
+  * {
+    box-sizing: border-box;
+  }
+
+  
+  .grid-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  }
+  .grid-options .header-button {
+    background-color: $accent;
+    margin: 5% 0 5% 5% ;
+    text-align: center;
+    border-radius: .25em;
+    font-family: "DotGothic16-Regular";
+    width: 50%;
+    display: table-cell;
+  vertical-align: middle;
+  position: relative;
+  }
+  .header-button span {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .grid-options .header-button:hover {
+    color: $bg;
+  }
+  .grid-options .header-button:active{
+    transform: scale(1.2);
+  }
+  
+  .container {
+    display: grid;
+    grid-template-rows: auto 2fr 
+  }
+  .container2{
+    display: grid;
+    grid-template-columns: 5fr 1fr;
+    background-color: #E6E8E6;
+  }
+
+
+  //select
+  /* Reset Select */
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  appearance: none;
+  outline: 0;
+  box-shadow: none;
+  border: 0 !important;
+  background: $accent;
+  background-image: none;
+  font-family: "DotGothic16-Regular";
+}
+/* Remove IE arrow */
+select::-ms-expand {
+  display: none;
+}
+/* Custom Select */
+.select {
+  position: relative;
+  display: flex;
+  margin: 5% 0 5% 5% ;
+  line-height: 3;
+  background: $accent;
+  overflow: hidden;
+  border-radius: .25em;
+}
+select {
+  flex: 1;
+  padding: 0 .5em;
+  color: #fff;
+  cursor: pointer;
+}
+/* Arrow */
+.select::after {
+  content: '\25BC';
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0 1em;
+  background: lighten($color: $accent, $amount: 10);
+  cursor: pointer;
+  pointer-events: none;
+  -webkit-transition: .25s all ease;
+  -o-transition: .25s all ease;
+  transition: .25s all ease;
+}
+/* Transition */
+.select:hover::after {
+  color: $bg;
+}

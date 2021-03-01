@@ -1,5 +1,5 @@
 import React, { Component, createRef } from 'react'
-import './node.css'
+import './node.scss'
 export default class Node extends Component {
     constructor(props) {
         super(props)

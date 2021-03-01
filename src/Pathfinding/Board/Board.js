@@ -2,9 +2,10 @@ import React, { Component } from 'react'
 import pathfinder from '../pathfinding.js';
 import Node from '../Node/Node';
 
-import './board.css'
+import './board.scss'
+import SideOptions from '../../Sidebar/SideOptions.js';
 var BOARD_WIDTH = 41
-var BOARD_HEIGHT = 11
+var BOARD_HEIGHT = 15
 var START_POS = { x: 2, y: Math.floor(BOARD_HEIGHT / 2) }
 var END_POS = { x: BOARD_WIDTH - 3, y: Math.floor(BOARD_HEIGHT / 2) }
 
@@ -20,6 +21,11 @@ export default class Board extends Component {
 
         }
         this.pathfinder = new pathfinder()
+        this.speed = 10;
+        this.buttons = true;
+    }
+    speedCallback(sp) {
+        this.speed = sp;
     }
     nodeEquals(n1, n2) {
         if (n1.x === n2.x && n1.y === n2.y) {
@@ -51,26 +57,35 @@ export default class Board extends Component {
                     this.makeWall(grid[x].x, grid[x].y)
 
 
-                }, x * 5);
+                }, x * this.speed);
             }
         }, resettimeout);
     }
-    animateRecursiveGrid(speed = 5) {
+    animateRecursiveGrid() {
         let grid = this.recursiveDivisionGrid()
         for (let x = 0; x < grid.length; x++) {
             setTimeout(() => {
                 this.makeWall(grid[x].x, grid[x].y)
-            }, x * (speed * 5));
+            }, x * (this.speed * 3));
         }
     }
     aStarSolve() {
+        console.log(this.buttons);
+        if(!this.buttons){
+            return;
+        }
         this.removePathOpenCurrent()
+        var id = window.setTimeout(function () { }, 0);
+        while (id--) {
+            window.clearTimeout(id);
+            // will do nothing if no timeout with id is present
+        }
         let test = this.pathfinder.solveAstar(this.state.grid, START_POS, END_POS)
 
         this.animateastar(test[0], test[1], 5)
 
     }
-    animateastar(path, open, speed = 1) {
+    animateastar(path, open) {
         for (let x = 0; x < open.length; x++) {
             setTimeout(() => {
                 this.accessRef(open[x]).className += " current"
@@ -88,15 +103,19 @@ export default class Board extends Component {
 
 
 
-            }, x * (speed * 5));
+            }, x * (this.speed * 5));
         }
         if (path.length == 0) {
             setTimeout(() => {
+
                 for (let x = 0; x < open.length; x++) {
-                    this.accessRef(open[x]).className += " noPath"
+                    setTimeout(() => {
+                        this.accessRef(open[x]).className += " noPath"
+                    }, x * (this.speed * 1));
+
                 }
 
-            }, open.length * (speed) + 100);
+            }, (open.length * (this.speed * 5)));
         }
         setTimeout(() => {
             for (let x = 0; x < path.length; x++) {
@@ -105,10 +124,10 @@ export default class Board extends Component {
                     if (!path[x].start && !path[x].end) {
                         this.accessRef(path[x]).className = "node path"
                     }
-                }, x * (speed * 7.5));
+                }, x * (this.speed * 7.5));
 
             }
-        }, (open.length * (speed * 5)) + 100);
+        }, (open.length * (this.speed * 5)) + 100);
 
 
 
@@ -117,6 +136,7 @@ export default class Board extends Component {
 
     }
     resetGrid(wipe = false) {
+        this.buttons = false
         var id = window.setTimeout(function () { }, 0);
         while (id--) {
             window.clearTimeout(id);
@@ -144,6 +164,7 @@ export default class Board extends Component {
                 }
                 if (!wipe) {
                     this.accessRef(this.state.grid[y][x]).className = "node"
+                    this.buttons= true;
                 }
 
             }
@@ -160,6 +181,7 @@ export default class Board extends Component {
                 // console.log(x);
                 setTimeout(() => {
                     for (let y = 0; y < this.state.grid.length; y++) {
+
                         if (this.state.grid[y][x].start || this.state.grid[y][x].end) {
                             this.accessRef(this.state.grid[y][x]).className += " wipe"
 
@@ -214,15 +236,51 @@ export default class Board extends Component {
         console.log(grids[0]);
         this.setState({ grid: grids[0], gridComp: grids[1] })
     }
+    componentWillUnmount(){
+        var id = window.setTimeout(function () { }, 0);
+        while (id--) {
+            window.clearTimeout(id);
+            // will do nothing if no timeout with id is present
+        }
+    }
     render() {
         return (
             <div className="container">
-                <button onClick={() => this.createRecursiveMaze()}>grid</button>
-                <button onClick={() => this.aStarSolve()}>solve</button>
-                <button onClick={() => this.resetGrid(true)}>reset</button>
+                <div className="container2">
+                    <div className="grid-options">
+                        <div class="select">
+                            <select name="slct" id="slct">
+                                <option value="AStar">A* Search</option>
+                            </select>
+                        </div>
+                        <div className="header-button" onClick={() => this.aStarSolve()}><span>Solve</span></div>
+                        <div class="select">
+                            <select name="slct" id="slct">
+                                <option value="RecDiv">Recursive Division</option>
+                            </select>
+                        </div>
+                        <div className="header-button" onClick={() => this.createRecursiveMaze()}><span>Create</span></div>
+                        <div className="header-button" onClick={() => {
+                            setTimeout(() => {
+                                this.buttons = true;
+                                console.log(this.buttons);
+                            }, this.resetGrid(true));
+                        }}><span>RESET GRID</span></div>
+
+                    </div>
+                    <SideOptions solve={() => this.aStarSolve()}
+                        speed={(sp) => { this.speedCallback(sp) }}
+                        speedValue={this.speed}
+                    >
+                    </SideOptions>
+                </div>
+
+
+
                 <div className="grid">
                     {this.state.gridComp.map((row, rowid) =>
-                        <div id={rowid} className="row"> {row.map((item) => (item.node))} </div>
+                        // <div id={rowid} className="row"> {row.map((item) => (item.node))} </div>
+                        row.map((item) => (item.node))
                     )
                     } </div>
             </div>
@@ -405,17 +463,26 @@ export default class Board extends Component {
             cells.push({ x: width - 1, y })
 
         }
-        return cells.concat(this.divide(false, 2, width - 3, 2, height - 3))
+        return cells.concat(this.divide(true, 2, width - 3, 2, height - 3, [], true))
 
     }
-    divide(h, minX, maxX, minY, maxY, animationCells = []) {
-        //if (maxY - minY > maxX - minX || (maxY - minY == maxX - minX) && Math.floor(Math.random() * 2) == 1) {
-        if (h) {
+    divide(h, minX, maxX, minY, maxY, animationCells = [], initial = false) {
+        console.log(initial);
+        console.log("haha");
+        if (initial) {
+            h = true
+        }
+        if (maxY - minY > maxX - minX || (maxY - minY == maxX - minX) && Math.floor(Math.random() * 2) == 1) {
+            // if (h) {
             if (maxX - minX < 1) {
                 return animationCells
             }
 
             var y = Math.floor(this.randomNumber(minY, maxY) / 2) * 2
+            if (initial) {
+                console.log("apples");
+                y = minY + Math.floor((maxY - minX) / 2)
+            }
             animationCells = animationCells.concat(this.addHWall(minX, maxX, y))
 
             animationCells = animationCells.concat(this.divide(!h, minX, maxX, minY, y - 2))

@@ -1,0 +1,33 @@
+$bgColour : #140D4F;
+
+@font-face {
+    font-family: "DotGothic16-Regular";
+    src: url("./fonts/DotGothic16-Regular.ttf");
+  }
+html, 
+body , #root{
+    margin: 0; height: 100%; overflow: hidden
+}
+.tabs-container{
+    height:100%;
+    background-color: $bgColour;
+    font-family: "DotGothic16-Regular";
+    color: #E6E8E6;
+    font-weight: bold;
+    letter-spacing: 0.3vmin;
+}
+react-tabs__tab {
+    
+}
+.react-tabs__tab-panel {
+    height: 100%;
+    background-color: $bgColour;
+}
+.react-tabs__tab--selected{
+    background-color:#E6E8E6;
+    color: $bgColour;
+}
+.react-tabs__tab-list{
+    border-bottom: 1vmin solid $bgColour;
+}
+

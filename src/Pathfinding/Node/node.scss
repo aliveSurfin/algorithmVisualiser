@@ -1,0 +1,125 @@
+$openColour : #23c9ff;
+$wallColour : #140D4F;
+$pathColour : #8332AC;
+$endColour : #EE6055;
+$startColour: #38B34C;
+$boardColour: #E6E8E6;
+.grid {
+  margin-top: 1vmin;
+  border-top: 1vmin solid white;
+  margin-bottom: 1vmin;
+  border-bottom: 1vmin solid white;
+  font-size: 0;
+  /* text-align: center;
+  background-color: white; */
+  display: grid;
+  grid-template-columns: repeat(41, 0.9fr);
+}
+.node {
+  text-align: center;
+  box-shadow: 0 0 1px 1px $wallColour;
+  /* display: inline-block; */
+  border-radius: 5%;
+  background-color: $boardColour;
+}
+.node::before {
+  content: "";
+  padding-bottom: 100%;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.wall {
+  background-color : $wallColour;
+  box-shadow: 0;
+  animation: wall 0.1s;
+}
+@keyframes wall {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+.open {
+  background-color: $openColour;
+  -webkit-transition: background-color 200ms linear;
+  -ms-transition: background-color 200ms linear;
+  transition: background-color 200ms ease-in;
+  box-shadow: 0 0 1px 1px lighten($color: $openColour, $amount: 10)
+}
+.open-done {
+  background-color: $openColour;
+}
+// .current {
+//   background-color: orange;
+//   box-shadow: 0 0 1px 1px orange;
+// }
+.closed {
+  background-color: black;
+}
+.path {
+  background-color: $pathColour;
+  outline: 0;
+  -webkit-transition: 0;
+  -ms-transition: 0;
+  transition: 0;
+  box-shadow: 0 0 1px 1px lighten($color: $pathColour, $amount: 20);
+  animation: path 0.1s;
+}
+.wipe {
+  background-color: $boardColour;
+  transition: background-color 300ms ease-in;
+  animation: wipe 0.3s;
+}
+@keyframes wipe {
+  0% {
+    transform: scale(1.5);
+  }
+  50% {
+    transform: scale(1.3);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes path {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+.end {
+  background-color: $endColour;
+  box-shadow: 0 0 1px 1px $endColour;
+}
+.start {
+  background-color: $startColour;
+  box-shadow: 0 0 1px 1px $startColour;
+}
+
+.noPath {
+  background-color: purple;
+  -webkit-transition: background-color 1000ms linear;
+  -ms-transition: background-color 1000ms linear;
+  transition: background-color 1000ms linear;
+}
+
+@media only screen and (max-width: 600px) {
+  .grid {
+    // -webkit-transform: rotate(90deg);
+    // -moz-transform: rotate(90deg);
+    // -o-transform: rotate(90deg);
+    // -ms-transform: rotate(90deg);
+    // transform: rotate(90deg);
+    
+  }
+  html,body ,#root{
+    overflow: auto;
+  }
+}

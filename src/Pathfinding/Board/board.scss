@@ -37,12 +37,15 @@ ul > li {
     display: table-cell;
   vertical-align: middle;
   position: relative;
+  cursor: pointer;
   }
   .header-button span {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    font-size: 16px;
+    font-size: 2vw;
   }
   .grid-options .header-button:hover {
     color: $bg;

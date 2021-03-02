@@ -9,6 +9,7 @@ $buttonbg : transparent;
   background-color:$bg;
   border-radius: 30% 0 0 30% ;
   padding:  20px 20px 20px 20px;
+  cursor: pointer;
 }
 .button {
   background: $buttonbg;
@@ -103,7 +104,7 @@ $buttonbg : transparent;
 }
 
 // start of speed styling
-input[type="range"] { 
+.speed-slider input[type="range"] { 
   width  :100%;
   margin: auto;
   -webkit-appearance: none;

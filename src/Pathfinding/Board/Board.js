@@ -271,6 +271,8 @@ export default class Board extends Component {
                     <SideOptions solve={() => this.aStarSolve()}
                         speed={(sp) => { this.speedCallback(sp) }}
                         speedValue={this.speed}
+                        speedMax = {30}
+                        label="Solve"
                     >
                     </SideOptions>
                 </div>

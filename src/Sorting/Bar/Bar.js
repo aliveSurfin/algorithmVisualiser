@@ -1,16 +1,17 @@
 
 import React, { Component, useRef } from 'react'
-import './Bar.css'
+import './Bar.scss'
 import { mergeSort } from './Algorithms/topdownmergesort'
 import ReactSlider from 'react-slider'
 import styled from 'styled-components';
+import SideOptions from '../../Sidebar/SideOptions.js'
 export default class Bar extends Component {
     constructor(props) {
         super(props)
-        this.state = { arraySize: 11 ,array: [],speed:25}
+        this.state = { arraySize: 31, array: [], speed: 200 }
     }
-    componentDidMount(){
-        this.setState({array:this.generateRandomArray()})
+    componentDidMount() {
+        this.setState({ array: this.generateRandomArray() })
     }
     generateRandomArray(len = this.state.arraySize, min = 1, max = 100) {
         let array = []
@@ -29,7 +30,7 @@ export default class Bar extends Component {
     }
     animateMergeSort(anims) {
         let speed = this.state.speed
-        console.log(speed);
+        console.log("speed ", speed);
         anims.forEach((curAnim, index) => {
             setTimeout(() => {
                 const bars = document.getElementById("barContainer")
@@ -38,20 +39,20 @@ export default class Bar extends Component {
 
                     case "compare":
                         {
-        
+
                             const [barOneIdx, barTwoIdx, chosenID] = curAnim.vals;
                             const higher = barTwoIdx == chosenID ? barOneIdx : barTwoIdx
-        
+
                             info.innerText = `comparing ${bars.children[barOneIdx].style.height.split("%")[0]} and ${bars.children[barTwoIdx].style.height.split("%")[0]}`
                             info.innerText += `\n${bars.children[chosenID].style.height.split("%")[0]} is less than ${bars.children[higher].style.height.split("%")[0]}`
-        
-        
+
+
                             //console.log(bars);
                             bars.children[barOneIdx].classList = "bar compare"
                             bars.children[barTwoIdx].classList = "bar compare"
                             bars.children[chosenID].classList = "bar chosen"
-                            
-        
+
+
                             break;
                         }
                     case "change":
@@ -65,7 +66,7 @@ export default class Bar extends Component {
                         }
                         barOneStyle.height = `${newHeight}%`;
                         bars.children[barOneIdx].classList = "bar sorted"
-        
+
                         break;
                     case "split": {
                         const [leftStartID, leftEndID] = curAnim.left
@@ -73,9 +74,9 @@ export default class Bar extends Component {
                         const [middleLeft, middleRight] = curAnim.middle
                         info.innerText = `splitting`
                         console.log(curAnim.middle);
-        
+
                         console.log(bars.children[middleLeft], bars.children[middleRight]);
-        
+
                         for (let x = leftStartID; x <= leftEndID; x++) {
                             bars.children[x].classList = "bar left"
                         }
@@ -88,12 +89,12 @@ export default class Bar extends Component {
                         break;
                     case "merge": {
                         //anims.push({ type: "merge", start: start, end : end, last: (initialStart == start && initialEnd == end) })// TODO: add last merge checking
-        
+
                     }
                 }
                 setTimeout(() => {
                     this.removeLastStep(curAnim)
-                }, speed/2);
+                }, speed / 2);
             }, index * speed);
 
         })
@@ -220,9 +221,9 @@ export default class Bar extends Component {
         return anims
 
     }
-    
+
     genNewArray(val = 11) {
-        this.setState({ array: this.generateRandomArray(val) },()=>this.setState({arraySize:val}))
+        this.setState({ array: this.generateRandomArray(val) }, () => this.setState({ arraySize: val }))
     }
     createStyledSliders() {
         const StyledSlider = styled(ReactSlider)`
@@ -253,34 +254,64 @@ export default class Bar extends Component {
         return (
             <div>
                 <StyledSlider
-                 onAfterChange={(val) => this.setState({speed:val})}
-                min={1}
-                max={500}
-                invert={true}
-                defaultValue={this.state.speed}
-                renderTrack={Track}
-                renderThumb={Thumb}
-            />
-            <StyledSlider
-                 onAfterChange={(val)=>this.genNewArray(val)}
-                min={1}
-                max={500}
-                defaultValue={this.state.arraySize}
-                renderTrack={Track}
-                renderThumb={Thumb}
-            />
+                    onAfterChange={(val) => this.setState({ speed: val })}
+                    min={1}
+                    max={500}
+                    invert={true}
+                    defaultValue={this.state.speed}
+                    renderTrack={Track}
+                    renderThumb={Thumb}
+                />
+                <StyledSlider
+                    onAfterChange={(val) => this.genNewArray(val)}
+                    min={1}
+                    max={500}
+                    defaultValue={this.state.arraySize}
+                    renderTrack={Track}
+                    renderThumb={Thumb}
+                />
             </div>
         )
+    }
+    speedCallback(sp) {
+        this.setState({ speed: sp })
+
     }
     render() {
         return (
             <div>
-                {this.createStyledSliders()}
-
-                <div className="barContainer" id="barContainer">
-                    {this.state.array.map((curEle) => { return <div ref={curEle.ref} className="bar" style={{ height: `${curEle}%`, width: `${99 / this.state.array.length}vw` , margin:`${(99 / this.state.array.length)/50}vw` }}></div> })}
+                {/* {this.createStyledSliders()} */}
+                <div className="container">
+                    <div className="container2">
+                        <div className="grid-options">
+                            <div class="select">
+                                <select name="slct" id="slct">
+                                    <option value="AStar">Top-Down Merge Sort</option>
+                                </select>
+                            </div>
+                            <div className="header-button" onClick={() => this.mergeSortArray(true)}><span>Sort</span></div>
+                            <div className="header-button" onClick={() => this.stepAnimateMergeSort()}> <span>Step</span></div>
+                            <div className="header-button" onClick={() => this.genNewArray(this.state.arraySize)}><span>Random</span></div>
+                            <div className="size-slider">
+                                <div className="size-label">
+                                    Size:  {this.state.arraySize}
+                                </div>
+                                <input className="size" defaultValue={this.state.arraySize} min={5} max={500} type="range" onChange={(e) => { this.genNewArray(e.target.value)}} />
+                            </div>
+                        </div>
+                        <SideOptions solve={() => this.mergeSortArray(true)}
+                            speed={(sp) => { this.speedCallback(sp) }}
+                            speedValue={this.state.speed}
+                            speedMax={200}
+                            label ="Sort"
+                        >
+                        </SideOptions>
+                    </div>
                 </div>
-                <button onClick={() => this.mergeSortArray(true)}>
+                <div className="barContainer" id="barContainer">
+                    {this.state.array.map((curEle) => { return <div ref={curEle.ref} className="bar" style={{ height: `${curEle}%`, width: `${99 / this.state.array.length}vw`, margin: `${(99 / this.state.array.length) / 50}vw` }}></div> })}
+                </div>
+                {/* <button onClick={() => this.mergeSortArray(true)}>
                     sort
             </button>
                 <button onClick={() => this.genNewArray(this.state.arraySize)}>
@@ -289,6 +320,7 @@ export default class Bar extends Component {
                 <button onClick={() => this.stepAnimateMergeSort()}>
                     step
             </button>
+                 */}
                 <div id="info">
                     info
             </div>

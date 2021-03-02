@@ -9,6 +9,8 @@ export default class SideOptions extends Component {
     this.solve = props.solve;
     this.speedCall = props.speed;
     this.speed = props.speedValue;
+    this.speedMax = props.speedMax;
+    this.label = props.label;
 
   }
   speedCallback(sp){
@@ -35,9 +37,9 @@ export default class SideOptions extends Component {
         <OffCanvasBody
 
         >
-          <div className="open-settings">
+          <div className="open-settings" onClick={this.handleClick.bind(this)}>
           
-            <a className={sideArrowClass} onClick={this.handleClick.bind(this)}>
+            <a className={sideArrowClass} >
               <div className="arrow"></div>
             </a>
             
@@ -50,12 +52,12 @@ export default class SideOptions extends Component {
 
           <div className="speed-slider">
             <div className="speed-label">
-              Speed {Math.abs(this.state.speed-30)}
+              Speed {Math.abs(this.state.speed-this.speedMax)}
             </div>
-          <input defaultValue={this.state.speed} min={2} max={30} type="range" onChange={(e)=>{this.speedCallback(e.target.value)}}/>
+          <input defaultValue={this.state.speed} min={2} max={this.speedMax} type="range" onChange={(e)=>{this.speedCallback(e.target.value)}}/>
           </div>
           <div className="side-solve" onClick={this.solveClose.bind(this)} >
-            Solve
+            {this.label}
               </div>
 
         </OffCanvasMenu>

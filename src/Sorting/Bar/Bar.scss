@@ -1,0 +1,122 @@
+$bg : #23c9ff; 
+$accent : #140D4F;
+.barContainer{
+    display: flex;
+    height: 70vmin;
+}
+.bar{
+    background-color: #E6E8E6;
+  border-radius: 0 0 0.5em 0.5em;
+}
+/* .split-left{
+  border-right: 10% solid black;
+}
+.split-right{
+  border-left: 10% solid black;
+} */
+.left{
+  background-color:lightgreen;
+}
+
+.right{
+  background-color: lightpink;
+}
+
+.compare{
+  background-color: yellow;
+}
+
+.chosen{
+  background-color: green;
+}
+.sorted{
+  background-color: purple;
+}
+#info{
+  text-align: center;
+}
+
+
+//size slider
+.size-slider {
+  input[type="range"] { 
+  width  :100%;
+  margin: auto;
+  -webkit-appearance: none;
+  overflow: hidden;
+  cursor: pointer;
+  border-radius: 0; /* iOS */
+  background-color: green;
+}
+
+::-webkit-slider-runnable-track {
+  background: #ddd;
+}
+
+/*
+* 1. Set to 0 width and remove border for a slider without a thumb
+*/
+::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 0px; /* 1 */
+  height: 40px;
+  background: #fff;
+  border: 2px solid #999; /* 1 */
+}
+
+::-moz-range-track {
+  height: 40px;
+  background: #ddd;
+}
+
+::-moz-range-thumb {
+  background: #fff;
+  height: 40px;
+  width: 20px;
+  border: 3px solid #999;
+  border-radius: 0 !important;
+  box-sizing: border-box;
+}
+
+::-ms-fill-lower { 
+  background: $accent;
+}
+
+::-ms-thumb { 
+  background: #fff;
+  border: 2px solid #999;
+  height: 40px;
+  width: 20px;
+  box-sizing: border-box;
+}
+
+::-ms-ticks-after { 
+  display: none; 
+}
+
+::-ms-ticks-before { 
+  display: none; 
+}
+
+::-ms-track { 
+  background: #ddd;
+  color: transparent;
+  height: 40px;
+  border: none;
+}
+
+::-ms-tooltip { 
+  display: none;
+}
+}
+
+.size-slider{
+  margin-bottom: 7.5%;
+  margin-top: 7.5%;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+}
+.size-label{
+  text-align: center;
+  color: $accent;
+}

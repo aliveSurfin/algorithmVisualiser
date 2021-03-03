@@ -208,6 +208,11 @@ export default class Bar extends Component {
         }
     }
     mergeSortArray(animate = false) {
+        var id = window.setTimeout(function () { }, 0);
+        while (id--) {
+            window.clearTimeout(id);
+            // will do nothing if no timeout with id is present
+        }
         const anims = []
         let arrayCopy = this.state.array.slice()
         const auxArray = arrayCopy.slice()
@@ -223,7 +228,12 @@ export default class Bar extends Component {
     }
 
     genNewArray(val = 11) {
-        this.setState({ array: this.generateRandomArray(val) }, () => this.setState({ arraySize: val }))
+        var id = window.setTimeout(function () { }, 0);
+        while (id--) {
+            window.clearTimeout(id);
+            // will do nothing if no timeout with id is present
+        }
+        this.setState({ array: this.generateRandomArray(val) }, () => this.setState({ arraySize: val },()=>{let info = document.getElementById("info"); info.innerText="info";let bars = document.getElementById("barContainer"); for(let x =0; x< bars.children.length-3; x++){bars.children[x].classList="bar";}}))
     }
     createStyledSliders() {
         const StyledSlider = styled(ReactSlider)`
@@ -277,10 +287,16 @@ export default class Bar extends Component {
         this.setState({ speed: sp })
 
     }
+    componentWillUnmount(){
+        var id = window.setTimeout(function () { }, 0);
+        while (id--) {
+            window.clearTimeout(id);
+            // will do nothing if no timeout with id is present
+        }
+    }
     render() {
         return (
-            <div>
-                {/* {this.createStyledSliders()} */}
+        
                 <div className="container">
                     <div className="container2">
                         <div className="grid-options">
@@ -307,7 +323,7 @@ export default class Bar extends Component {
                         >
                         </SideOptions>
                     </div>
-                </div>
+                
                 <div className="barContainer" id="barContainer">
                     {this.state.array.map((curEle) => { return <div ref={curEle.ref} className="bar" style={{ height: `${curEle}%`, width: `${99 / this.state.array.length}vw`, margin: `${(99 / this.state.array.length) / 50}vw` }}></div> })}
                 </div>

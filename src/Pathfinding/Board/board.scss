@@ -33,7 +33,7 @@ ul > li {
     text-align: center;
     border-radius: .25em;
     font-family: "DotGothic16-Regular";
-    width: 50%;
+    width: 75%;
     display: table-cell;
   vertical-align: middle;
   position: relative;
@@ -56,7 +56,7 @@ ul > li {
   
   .container {
     display: grid;
-    grid-template-rows: auto 2fr 
+    grid-template-rows: 1fr 6fr 
   }
   .container2{
     display: grid;

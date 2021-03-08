@@ -245,9 +245,9 @@ export default class Board extends Component {
     }
     render() {
         return (
-            <div className="container">
-                <div className="container2">
-                    <div className="grid-options">
+            <div className="container pathfinding">
+                <div className="container2 pathfinding">
+                    <div className="grid-options pathfinding">
                         <div class="select">
                             <select name="slct" id="slct">
                                 <option value="AStar">A* Search</option>

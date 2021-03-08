@@ -297,9 +297,9 @@ export default class Bar extends Component {
     render() {
         return (
         
-                <div className="container">
-                    <div className="container2">
-                        <div className="grid-options">
+                <div className="container sorting">
+                    <div className="container2 sorting">
+                        <div className="grid-options sorting">
                             <div class="select">
                                 <select name="slct" id="slct">
                                     <option value="AStar">Top-Down Merge Sort</option>

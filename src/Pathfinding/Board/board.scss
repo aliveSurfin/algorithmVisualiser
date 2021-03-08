@@ -56,12 +56,19 @@ ul > li {
   
   .container {
     display: grid;
-    grid-template-rows: 1fr 6fr 
+    grid-template-rows: 1fr 6fr;
+    &.sorting{
+      grid-template-rows: 1fr 3fr 1fr;
+    }
+    
+    
   }
   .container2{
     display: grid;
+    
     grid-template-columns: 5fr 1fr;
     background-color: #E6E8E6;
+    
   }
 
 
